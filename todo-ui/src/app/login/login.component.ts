@@ -20,7 +20,7 @@ export class LoginComponent {
   login() {
     if(this.usrName==='testing' && this.passWrd==='testing') {
       //redirect to welcome page
-      this.router.navigate(['welcome']);
+      this.router.navigate(['welcome',this.usrName]);
       this.invalidLogin = false;
     } else {
       this.invalidLogin = true;
