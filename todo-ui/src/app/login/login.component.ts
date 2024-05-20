@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HardcodedAuthService } from '../hardcoded-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +16,12 @@ export class LoginComponent {
   //Router
   //Angular.giveMeRouter
   //Dependency Injection
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+    private hcAuth: HardcodedAuthService
+  ) {}
 
   login() {
-    if(this.usrName==='testing' && this.passWrd==='testing') {
+    if(this.hcAuth.authenticate(this.usrName, this.passWrd)) {
       //redirect to welcome page
       this.router.navigate(['welcome',this.usrName]);
       this.invalidLogin = false;
