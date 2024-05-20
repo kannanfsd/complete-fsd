@@ -7,18 +7,18 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a routerLink="/welcome/todo-app" class="nav-link">Home</a>
+          <a *ngIf="this.hcAuth.isUserLoggedIn()" routerLink="/welcome/todo-app" class="nav-link">Home</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/todos" class="nav-link">Todos</a>
+          <a *ngIf="this.hcAuth.isUserLoggedIn()" routerLink="/todos" class="nav-link">Todos</a>
         </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a routerLink="/login" class="nav-link">Login</a>
+          <a *ngIf="!this.hcAuth.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/logout" class="nav-link">Logout</a>
+          <a *ngIf="this.hcAuth.isUserLoggedIn()" routerLink="/logout" class="nav-link">Logout</a>
         </li>
       </ul>
 

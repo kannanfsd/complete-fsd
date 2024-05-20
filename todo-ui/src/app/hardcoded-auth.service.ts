@@ -9,10 +9,10 @@ export class HardcodedAuthService {
   constructor(private router: Router) { }
 
   authenticate(user:string, pass:string): boolean {
-    console.log('Before: '+this.isUserLoggedIn)
+    //console.log('Before: '+this.isUserLoggedIn())
     if(user==='jack' && pass === 'rose'){
       sessionStorage.setItem('authUser', user);
-      console.log('After: '+this.isUserLoggedIn)
+      //console.log('After: '+this.isUserLoggedIn())
       return true;
     }
     return false;
