@@ -7,5 +7,10 @@
     Page needs to be redirect to todos
     <a routerLink="/todos">Click here</a>
   </p>
+  <h4>
+    Click here to get  customized message - <h6 *ngIf="welcomeMessage"> {{welcomeMessage | uppercase}} </h6>
+    <button (click)="getMessageWithParam()" class="btn btn-success">
+      Get Welcome message</button>
+  </h4>
 </div>
 
