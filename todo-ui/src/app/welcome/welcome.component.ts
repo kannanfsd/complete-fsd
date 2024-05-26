@@ -28,9 +28,17 @@ export class WelcomeComponent implements OnInit{
   }
 
   getMessage() {
-    console.log("ready to call welcome api.");
+    //console.log("ready to call welcome api.");
     this.service.executeHelloWorld().subscribe(
-      response => this.handleSuccessResponse(response)
+      response => this.handleSuccessResponse(response),
+      error => this.handleErrorResponse(error)
+    );
+  }
+
+  getMessageWithParam() {
+    this.service.executeHelloWorldVariable(this.name).subscribe(
+      response => this.handleSuccessResponse(response),
+      error => this.handleErrorResponse(error)
     );
   }
 
@@ -38,6 +46,11 @@ export class WelcomeComponent implements OnInit{
     console.log(response);
     this.welcomeMessage = response.message;
     console.log(this.welcomeMessage);
+  }
+
+  handleErrorResponse(error: any) {
+    console.log(error.error.message);
+    this.welcomeMessage = error.error.message;
   }
 
 }
