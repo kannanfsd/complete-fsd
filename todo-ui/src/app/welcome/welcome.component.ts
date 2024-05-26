@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { WelcomeDataService } from '../service/data/welcome-data.service';
 //@ComponentScan(value="com.learn.springboot.web")
 @Component({
   selector: 'app-welcome',
@@ -11,10 +12,12 @@ export class WelcomeComponent implements OnInit{
   //String message = "welcome message";
   message = 'welcome message';
   name = '';
-
+  welcomeMessage = '';
   //public SpringBootFirstWebApplication(){}
   //ActivatedRoute
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private service: WelcomeDataService) {
 
   }
   //void init(){}
@@ -23,4 +26,18 @@ export class WelcomeComponent implements OnInit{
     this.name = this.route.snapshot.params['name'];
     console.log(this.name);
   }
+
+  getMessage() {
+    console.log("ready to call welcome api.");
+    this.service.executeHelloWorld().subscribe(
+      response => this.handleSuccessResponse(response)
+    );
+  }
+
+  handleSuccessResponse(response: any) {
+    console.log(response);
+    this.welcomeMessage = response.message;
+    console.log(this.welcomeMessage);
+  }
+
 }
