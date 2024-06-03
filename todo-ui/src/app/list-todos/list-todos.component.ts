@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoDataService } from '../service/data/todo-data.service';
+import { Router } from '@angular/router';
 
 //Future
 // -No Navigation Menu and Footer
@@ -37,7 +38,8 @@ export class ListTodosComponent implements OnInit {
   //   description: 'Dance'
   // };
   constructor(
-    private service: TodoDataService
+    private service: TodoDataService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.refreshTodo();
@@ -59,5 +61,10 @@ export class ListTodosComponent implements OnInit {
         this.refreshTodo();
       }
     )
+  }
+
+  updateTodo(id: number) {
+    console.log(`call update method -> ID: ${id}`);
+    this.router.navigate(['todos', id]);
   }
 }
