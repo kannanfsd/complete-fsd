@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { TodoDataService } from '../service/data/todo-data.service';
 
 //Future
 // -No Navigation Menu and Footer
@@ -22,16 +23,27 @@ export class Todo {
   templateUrl: './list-todos.component.html',
   styleUrls: ['./list-todos.component.css']
 })
-export class ListTodosComponent {
-  todos = [
-    new Todo(1, 'Learn to Python', false, new Date()),
-    new Todo(1, 'Become an expert an angular', false, new Date()),
-    new Todo(1, 'Planned to GCP certificate', false, new Date()),
-    new Todo(1, 'Learn to singing', false, new Date()),
-  ]
-  todo = {
-    id: 1,
-    description: 'Dance'
-  };
-  constructor() {}
+export class ListTodosComponent implements OnInit {
+  todos: Todo[] = [];
+  // [
+  //   new Todo(1, 'Learn to Python', false, new Date()),
+  //   new Todo(1, 'Become an expert an angular', false, new Date()),
+  //   new Todo(1, 'Planned to GCP certificate', false, new Date()),
+  //   new Todo(1, 'Learn to singing', false, new Date()),
+  // ]
+  // todo = {
+  //   id: 1,
+  //   description: 'Dance'
+  // };
+  constructor(
+    private service: TodoDataService
+  ) {}
+  ngOnInit(): void {
+    this.service.retrieveAllTodos('jack').subscribe(
+      response => {
+        console.log(response);
+        this.todos = response;
+      }
+    )
+  }
 }
