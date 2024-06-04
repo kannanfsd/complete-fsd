@@ -22,4 +22,8 @@ export class TodoDataService {
   retrieveTodos(username: string, id: number){
     return this.http.get<Todo>(`http://localhost:8090/users/${username}/todos/${id}`);
   }
+
+  updateTodos(username: string, id: number, todo: Todo){
+    return this.http.put(`http://localhost:8090/users/${username}/todos/${id}`, todo);
+  }
 }
