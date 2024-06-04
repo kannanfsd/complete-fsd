@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TodoComponent implements OnInit {
   id: number = 0;
   todo: Todo = {
-    id: 0,
+    id: -1,
     description: '',
     done: false,
     targetDate: new Date
@@ -23,17 +23,30 @@ export class TodoComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-    this.todoService.retrieveTodos('jack', this.id).subscribe(
-      data => this.todo = data
-    )
+    if(this.id != -1) {
+      this.todoService.retrieveTodos('jack', this.id).subscribe(
+        data => this.todo = data
+      )
+    }
   }
   saveTodo() {
-    this.todoService.updateTodos('jack', this.id, this.todo)
-        .subscribe(
-          data => {
-            console.log(data)
-            this.router.navigate(['todos']);
-          }
-        )
+    if(this.id === -1) {
+      //create todo
+      this.todoService.craeteTodos('jack', this.todo)
+      .subscribe(
+        data => {
+          console.log(data)
+          this.router.navigate(['todos']);
+        }
+      )
+    } else {
+      this.todoService.updateTodos('jack', this.id, this.todo)
+      .subscribe(
+        data => {
+          console.log(data)
+          this.router.navigate(['todos']);
+        }
+      )
+    }
   }
 }

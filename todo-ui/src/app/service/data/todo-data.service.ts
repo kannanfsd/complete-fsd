@@ -26,4 +26,7 @@ export class TodoDataService {
   updateTodos(username: string, id: number, todo: Todo){
     return this.http.put(`http://localhost:8090/users/${username}/todos/${id}`, todo);
   }
+  craeteTodos(username: string, todo: Todo){
+    return this.http.post(`http://localhost:8090/users/${username}/todos`, todo);
+  }
 }
