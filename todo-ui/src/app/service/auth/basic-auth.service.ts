@@ -1,6 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { API_URL } from 'src/app/app.constants';
+
+export const TOKEN = 'token';
+export const AUTHENTICATED_USER = 'authUser';
 
 @Injectable({
   providedIn: 'root'
@@ -9,40 +13,41 @@ export class BasicAuthService {
 
   constructor(private http: HttpClient) { }
 
-  authenticate(user:string, pass:string): boolean {
-    //console.log('Before: '+this.isUserLoggedIn())
-    if(user==='jack' && pass === 'rose'){
-      sessionStorage.setItem('authUser', user);
-      //console.log('After: '+this.isUserLoggedIn())
-      return true;
-    }
-    return false;
-  }
-
-  isUserLoggedIn() {
-    let user = sessionStorage.getItem('authUser');
-    return !(user===null)
-  }
-
-  logout() {
-    sessionStorage.removeItem('authUser');
-  }
-
   executeBasicAuthentication(user:string, pass:string) {
-    console.log('Hit to King.');
+    let basicAuth = 'Basic ' + window.btoa(user + ':' + pass);
     return this.http.get<AuthenticationBean>(
-      `http://localhost:8090/basicauth`,
+      `${API_URL}/basicauth`,
       {headers: new HttpHeaders({
-        Authorization: 'Basic ' + window.btoa(user + ':' + pass)
+        Authorization: basicAuth
       })}
     ).pipe(
       map(
         data => {
-          sessionStorage.setItem('authUser', user);
+          sessionStorage.setItem(AUTHENTICATED_USER, user);
+          sessionStorage.setItem(TOKEN, basicAuth);
         }
-      )
-    )
+      ));
   }
+
+  getAuthenticatedUser() {
+    return sessionStorage.getItem(AUTHENTICATED_USER);
+  }
+
+  getAuthenticatedToken():any {
+    if(this.getAuthenticatedUser())
+      return sessionStorage.getItem(TOKEN);
+  }
+
+  isUserLoggedIn() {
+    let user = sessionStorage.getItem(AUTHENTICATED_USER);
+    return !(user===null)
+  }
+
+  logout() {
+    sessionStorage.removeItem(AUTHENTICATED_USER);
+    sessionStorage.removeItem(TOKEN);
+  }
+
 }
 
 export class AuthenticationBean {
