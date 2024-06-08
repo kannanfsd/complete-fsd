@@ -25,7 +25,8 @@ export class WelcomeDataService {
       Authorization: basicAuth
     })
     console.log('Headers--->'+headers);
-    return this.http.get<HelloWorldBean>(`http://localhost:8090/hello-world-bean/path-variable/${name}`, {headers}
+    return this.http.get<HelloWorldBean>(`http://localhost:8090/hello-world-bean/path-variable/${name}`,
+      {headers}
     );
   }
 
