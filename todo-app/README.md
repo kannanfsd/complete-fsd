@@ -34,3 +34,7 @@ For Exceptions - Define a consistent approach
 /search
 PUT 	/gists/{id}/star
 DELETE  /gists/{id}/star
+
+1.Create branch in Remote
+2.git fetch origin feature/06-todo-security
+3.git checkout -b feature/06-todo-security origin/feature/06-todo-security

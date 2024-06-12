@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HardcodedAuthService } from '../hardcoded-auth.service';
+import { BasicAuthService } from '../service/auth/basic-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent {
   //Angular.giveMeRouter
   //Dependency Injection
   constructor(private router: Router,
-    private hcAuth: HardcodedAuthService
+    private hcAuth: HardcodedAuthService,
+    private basicAuth: BasicAuthService
   ) {}
 
   login() {
@@ -30,4 +32,21 @@ export class LoginComponent {
     }
     console.log(this.usrName);
   }
+
+  handleBasicAuthLogin() {
+    console.log('Hit to Queen.');
+    this.basicAuth.executeBasicAuthentication(this.usrName, this.passWrd)
+        .subscribe(
+          data => {
+            console.log(data);
+            this.router.navigate(['welcome',this.usrName]);
+            this.invalidLogin = false;
+          },
+          error => {
+            console.log(error);
+            this.invalidLogin = true;
+          }
+        )
+  }
+
 }
